@@ -1,0 +1,34 @@
+# Pre-commit configuration file
+
+repos:
+  # Repository containing common pre-commit hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0  # Version of the repository to use
+    hooks:
+      # Removes trailing whitespace from files
+      - id: trailing-whitespace
+        exclude: ^(\.venv|.github)/  # Exclude .GitHub, .venv directory from this hook
+      # Ensures files end with a newline
+      - id: end-of-file-fixer
+        exclude: ^(\.venv|.github)/  # Exclude .GitHub, .venv directory from this hook
+      # Checks YAML files for syntax errors
+      - id: check-yaml
+        args: [--unsafe]  # Allow unsafe checks
+        exclude: ^(\.venv|.github)/  # Exclude .GitHub, .venv directory from this hook
+      # Prevents large files from being added
+      - id: check-added-large-files
+        exclude: ^(\.venv|.github)/  # Exclude .GitHub, .venv directory from this hook
+      # Detects unresolved merge conflicts
+      - id: check-merge-conflict
+      # Prevents committing private keys
+      - id: detect-private-key
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    # Ruff version.
+    rev: v0.8.0
+    hooks:
+       # Run the formatter.
+      - id: ruff-format
+      # Run the linter.
+      - id: ruff
+        args: [ --fix ]
