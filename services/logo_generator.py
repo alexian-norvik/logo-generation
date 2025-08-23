@@ -49,20 +49,18 @@ def display_image(
     print("Also saved a copy as 'generated_logo.png' in the root directory")
 
 
-prompt = """
-A white wall with two Art Deco travel posters mounted. First poster has the text: "NEPTUNE", tagline: "The jewel of the solar system!' Second poster has the text: "JUPITER", tagline: "Travel with the giants!
-"""
+def generate_logo(prompt: str) -> None:
+    image = client.models.generate_images(
+        model="imagen-4.0-ultra-generate-001",
+        prompt=prompt,
+        config=types.GenerateImagesConfig(
+            aspect_ratio="1:1",
+            number_of_images=1,
+            image_size="2K",
+            enhance_prompt=True,
+            safety_filter_level="BLOCK_MEDIUM_AND_ABOVE",
+            person_generation="ALLOW_ADULT",
+        ),
+    )
 
-image = client.models.generate_images(
-    model="imagen-4.0-ultra-generate-001",
-    prompt=prompt,
-    config=types.GenerateImagesConfig(
-        aspect_ratio="16:9",
-        number_of_images=1,
-        image_size="2K",
-        safety_filter_level="BLOCK_MEDIUM_AND_ABOVE",
-        person_generation="ALLOW_ADULT",
-    ),
-)
-
-display_image(image.generated_images[0].image)
+    display_image(image.generated_images[0].image)
